@@ -12,7 +12,7 @@ public class KeyReader {
         Properties appProps = new Properties();
 
         try {
-            appProps.load(new FileReader("Resources/app.properties"));
+            appProps.load(new FileReader("src/Resources/app.properties"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -21,6 +21,6 @@ public class KeyReader {
     }
 
     public String getApi_key() {
-        return api_key = "a5e6864562a9f8f8f9f365a974cb26c6";
+        return api_key;
     }
 }
