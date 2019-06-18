@@ -21,6 +21,6 @@ public class KeyReader {
     }
 
     public String getApi_key() {
-        return api_key;
+        return api_key = "a5e6864562a9f8f8f9f365a974cb26c6";
     }
 }
