@@ -1,23 +1,40 @@
 package FixerIO_Example;
 
 
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class App
 {
     public static String success;
     static int i =1;
+    private static Double Doubleinput;
+    private static FixerHTTPManager manager = new FixerHTTPManager();
+    private static SearchMaster searchMaster = new SearchMaster();
+    private static ThreadExample threadExample = new ThreadExample();
 
-    public static void main(String[] args) {
-        FixerHTTPManager manager = new FixerHTTPManager();
-        Boolean ex = manager.initialize();
-        if (ex == true) {
-            System.out.println("Successful Start");
-            ui();
-        } else {
-            System.out.println("START UP RESPONSE WAS " + ex);
-        }
+    private static Double input;
+    private static String stringInput;
 
+    public static void main(String[] args) throws Exception {
+
+//        threadExample.setUp();
+        searchMaster.search();
+
+//        if (manager.initialize() == true) {
+//                System.out.println("Successful Start");
+//                ui();
+//            } else {
+//                System.out.println("False Start ");
+//            }
+        System.exit(0);
+    }
+
+    public static void murder(){
+        System.exit(999);
     }
 
     public static void ui(){
@@ -39,7 +56,7 @@ public class App
             System.out.println("I WILL WRITE THIS SOON");
             ui();
         } else if (command.contains("exit")) {
-            System.out.println("---- END ----");
+            murder();
         } else {
             System.out.println("nothing registered");
             ui();
@@ -48,29 +65,70 @@ public class App
 
     public static void app(){
         FixerHTTPManager manager = new FixerHTTPManager();
-        Scanner reader = new Scanner(System.in);
         System.out.println("What currency code are you looking for?");
-        String targetCurrency = reader.nextLine().toLowerCase();
+        String targetCurrency = getStringInput();
         if (targetCurrency.equalsIgnoreCase("exit")){
             ui();
         }
-        manager.findRate(targetCurrency);
+        if (manager.getRateFor(targetCurrency) == true){
+            System.out.println(manager.getAnswerRateCode() + ": " + manager.getAnswerRateFor());
+        }
         app();
     }
 
+    public static String getStringInput(){
+        Scanner reader = new Scanner(System.in);
+        stringInput = reader.nextLine().toLowerCase();
+        if (stringInput.isEmpty()){
+            getStringInput();
+        }
+        return stringInput;
+    }
+
+    public static Boolean setDoubleInput() {
+        String string = getStringInput();
+        input = null;
+        if (string.equalsIgnoreCase("exit")) {
+            return false;
+        }
+            try {
+                input = Double.parseDouble(string);
+            } catch (Exception e) { }
+            if (input == null){
+                System.out.println(string + " is not a number");
+                setDoubleInput();
+            }
+            if (input != null) {
+            Doubleinput = input;
+            return true;
+            }
+            return false;
+    }
+
+    public static Double getDoubleInput(){
+        return Doubleinput;
+    }
+
+// NEED MORE ABSTRACATION
+
+    // Sets set the maps and vairables
+
+    // But getters need to be getters, just do a return back here,
+
+    //Should not need the system exits, system should run its course with out duplciating commands after the exit command
+        //This may be static values?
+            //Commands with no returns?
 
 
-
-
-
-    //OLD METHOD
-//    public static void main(String[] args) {
-//        KeyReader keyReader = new KeyReader();
-//        keyReader.getApi_key();
-//        FixerHTTPManager manager = new FixerHTTPManager();
-//        manager.setLatestRates();
-//        manager.getLatestRates();
+    //GO WAY OF WORK COULD BE THIS
+//    funcGetFromMap{
+//        IF SETVAIRABLE ==TRUE
+//        RETURN GET VAIRABLEthathasjustbeenset
+//            else
+//                return false or null
 //    }
+
+
 
 
 }
