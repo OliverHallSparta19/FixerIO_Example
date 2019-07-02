@@ -7,24 +7,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+public class BackUpSearchMaster010119 {
 
-/*
 
-
-====> KNOWN ISSUES
-
-All character in search phrase must be unique, System will compare to the first instance of the word in the phrase, not its correct expected position
-
-Multiple Streak sentances in the search phrase messes it up
-    Some reason ball was added to the result streak list
-        the second streak sentance will made into an array that is alot longer than necessary becuase it is adding with the exisitng streak number
-            so a result that should show 2 streak sentances is messed up
-
-Streak matching can be greatly improved
-    And then there can be some good refactoring, not as much code is needed
-
- */
-public class SearchMaster {
     public static String success;
     static int i =1;
     private static Double Doubleinput;
@@ -60,11 +45,11 @@ public class SearchMaster {
         }
 
         //String searchPhrase = "c z j d e";
-        String searchPhrase = "cardse oliver william mckey Tooth oliver william mckey hall Fairy oliver william mckey Math Oliver William Mckey Gibber Jabber Tony Find survival of the fittest Something Here Marksman Oliver William Mckey Hall Her";
+        String searchPhrase = "Curve Ball Oliver William Mckey hall Jack Black Twisted Plot Math";
 //        Curve Ball Oliver William Mckey Hall Test James Bond Is A Good Movie
         //maybe do list array of duplicates.
         //set a = {0, 3}
-            //if set a.contains(y) its a streakmatch
+        //if set a.contains(y) its a streakmatch
         searchPhrase = searchPhrase.replace(".", "");
         searchPhrase = searchPhrase.replace(";", "");
         List<String> phraseToSearch = Arrays.asList(searchPhrase.split(" "));
@@ -79,17 +64,11 @@ public class SearchMaster {
             int neWordMatchNumberofOccurnencecess = 0;
             int lineCount = 0;
             int wordCount = 0;
-            int exactMatch = 0;
-            int closeMatch = 0;
-            int allMatch = 0;
             int comp = 0;
-            int streak = 0;
+            int streak = 1;
             int highestStreak = 0;
-            ArrayList<String> matchedPairs = new ArrayList<>();
-            ArrayList<String> matchedSequencesFinal = new ArrayList<>();
-            ArrayList<String> longestMatch = new ArrayList();
-            ArrayList<String> wipStreakWord = new ArrayList();
-
+            int searchWordMatchPosition = 0;
+            int position = 0;
 
             try {
                 br = new BufferedReader(new FileReader(files.get(a)));
@@ -110,97 +89,86 @@ public class SearchMaster {
                     String textLine = st.replace(".", "");
                     textLine = textLine.replace(";", "");
                     List <String> lineOfText = Arrays.asList(textLine.split(" "));
+                    int matchRequirmentBuffer = 2;
+
+                    int existingMatched = 2;
                     lineCount++;
 
+                    boolean sreakMatch = false;
+                    boolean repeatSearch = true;
+                    for (int i = 0; i < lineOfText.size(); i++){
+                        wordCount++;
+                        List<String> wordsToCompareTo = Arrays.asList(lineOfText.get(i).split(" "));
 
-                    for (int x = 0; x < lineOfText.size(); x++){
-                            wordCount++;
-                            int variation = (int) (lineOfText.get(x).length()*(20.0f/100.0f));
-//                    if (streak != 0){
-//                        x = streak;
-//                    }
-                        longestMatch = new ArrayList<>();
-                            streak = 0;
-                            for (int y = 0; y < phraseToSearch.size(); y++){
-                                int calculatedInt = minDistance(phraseToSearch.get(y).toLowerCase(), lineOfText.get(x).toLowerCase());
+                        for (int x = 0; x < wordsToCompareTo.size(); x++){
+                            sreakMatch = false;
+                            repeatSearch = true;
+                            //System.out.println("TEST " + x);
+//                            System.out.println("WORD LOOKS LIKE " + wordsToCompareTo.get(x));
+
+                            for (int y = 0; y < phraseToSearch.size() && sreakMatch != true && repeatSearch == true; y++){
+                                int calculatedInt = minDistance(phraseToSearch.get(y).toLowerCase(), wordsToCompareTo.get(x).toLowerCase());
                                 comp++;
                                 highTotalComparisons++;
                                 String searchWord = phraseToSearch.get(y);
-                                String textWord = lineOfText.get(x);
-                               if (calculatedInt <= variation) {
-                                   allMatch++;
+                                String textWord = wordsToCompareTo.get(x);
+//                                System.out.println("Word 1 " + wordsToSearch.get(y) + " Word 2 " + wordsToCompareTo.get(x));
+                                if (calculatedInt < 1) {
 
-                                   boolean loop = true;
-                                   for (int w = y + 1, z = x + 1; w < phraseToSearch.size() && z < lineOfText.size() && loop == true; w++, z++) {
-                                       int variation2 = (int) (lineOfText.get(z).length() * (20.0f / 100.0f));
-                                       String word1 = phraseToSearch.get(w);
-                                       String word2 = lineOfText.get(z);
-                                       int dif2 = minDistance(phraseToSearch.get(w).toLowerCase(), lineOfText.get(z).toLowerCase());
-                                       if (dif2 <= variation2 && !matchedPairs.contains(z + " " + w)) {
-                                           streak++;
-                                           allMatch++;
+                                    //if it is a expected streak? just check again the expected postion first?
+                                    //Number the postion of the first matches?
+                                    //Do i need an array of arrawys for matching words and postions
+                                    //If i have two sequence it could be two of the ways, but if a charecter is addded then 1 of those sequences could be elimianted as a possibilty becuase it does not contain the extra charecter/ search word postion number
 
-                                           if (streak == 1){System.out.println(lineOfText.get(x) + " == " + phraseToSearch.get(y) + " // Line Of Text=" + x + " PhraseToSearch=" + y);
-//                                           x = x -1;
-                                               matchedPairs.add(x + " " + y);
-//                                               matchedPairs.add("|");
-                                               wipStreakWord.add(lineOfText.get(x));
+                                    neWordMatchNumberofOccurnencecess++;
+//                                    System.out.println("MATCH MATCH MATCH " + phraseToSearch.get(y));
+                                    if (searchWordMatchPosition == y && searchWordMatchPosition < phraseToSearch.size() && position != y){
+                                        sreakMatch = true;
+                                        position = y;
+                                    }
+                                    repeatSearch = false;
 
-                                               //Compare an array made each time in for on same x value start
-                                                   //Array with highest value goes through starting at that x point
-                                           }
-                                               System.out.println(lineOfText.get(z) + " = " + phraseToSearch.get(w) + " // Line Of Text=" + z + " PhraseToSearch=" + w);
-                                                matchedPairs.add(z + " " + w);
-                                               wipStreakWord.add(lineOfText.get(z));
-                                           //System.out.println("HERE 3000 ===> " + matchedPairs);
-
-
-
-                                           //y = y + 1;
-//                                           x = x + 1;
-
-
-                                       } else {
-                                           loop = false;
-                                           streak = 0;
-                                       }
-//                                       if (wipStreakWord.size() > longestMatch.size()){
-//                                           longestMatch = new ArrayList<>(wipStreakWord);
-//                                           System.out.println("====> Longest match is " + longestMatch);
-//                                       }
-//                                       wipStreakWord = new ArrayList<>();
-                                   }
-
-                                   if (wipStreakWord.size() > longestMatch.size()){
-                                       longestMatch = new ArrayList<>(wipStreakWord);
-                                       System.out.println("====> Longest match is " + longestMatch);
-                                   }
-                                   wipStreakWord = new ArrayList<>();
-
-                                   if (!longestMatch.isEmpty()) {
-                                       matchedSequencesFinal.addAll(longestMatch);
-                                   }
-                                   //longestMatch = new ArrayList<>();
-                               }
-
-
+                                    searchWordMatchPosition = y +1;
+                                    //System.out.println("LOOK " + y);
+                                } else {
+                                    sreakMatch = false;
+                                }
                             }
-                        if (!longestMatch.isEmpty() && longestMatch.size() > 2){System.out.println("Actual ======================================================> Longest match is " + longestMatch);}
+// if the next word isnt a match reset the streak?
 
+                            //for streak to work, the match
+                            // the next match must be next after the previous match
+
+                            //if first streak, get postion of word in search sentance
+                            //take position of its first occurance
+
+                            //if streak number matches the position of the orignal search sentace?
+                            if (sreakMatch == true){
+                                streak++;
+                                if (streak > highestStreak){
+                                    highestStreak = streak;
+//                                    System.out.println("======================> STREAK of " + streak + " Words");
+                                    bestMatches = new ArrayList();
+                                    for (int d = (position + 1 - streak); d < position + 1 ; d++) {
+                                        bestMatches.add(phraseToSearch.get(d));
+                                    }
+                                }
+                            } else {
+                                //streak = 0;
+                            }
+
+
+
+                        }
                     }
-
                 }
-
             }
-            if (bestMatches.size() < 2) {
+            if (bestMatches.size() > 2) {
                 long endTime = System.nanoTime();
                 long duration = (endTime - startTime);
                 System.out.println("File: " + files.get(a));
                 System.out.println("Time Taken To Execute " + duration);
                 System.out.println("Close Matchning Words " + formatter.format(neWordMatchNumberofOccurnencecess));
-                System.out.println("Close Matches " + closeMatch);
-                System.out.println("Exact Matches " + exactMatch);
-                System.out.println("All Matches " + allMatch);
                 System.out.println("Streak is " + highestStreak);
                 System.out.println(" ");
                 System.out.println(searchPhrase);
@@ -211,9 +179,6 @@ public class SearchMaster {
                 System.out.println(formatter.format(comp) + " Comparisons Made");
                 System.out.println("_______________________________________________________");
                 System.out.println(" ");
-                System.out.println("longest matches are is " + matchedSequencesFinal);
-                System.out.println("longest match is " + longestMatch);
-
             }
         }
 
@@ -262,5 +227,14 @@ public class SearchMaster {
         }
         return dp[len1][len2];
     }
+
+
+
+
+
+
+
+
+
 
 }
