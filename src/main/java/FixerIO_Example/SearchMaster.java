@@ -58,7 +58,7 @@ public class SearchMaster {
                 fileMap.put(names.get(x), files.get(x));
             }
         }
-
+                                                                //On some longer arrays ==
         //String searchPhrase = "c z j d e";
         String searchPhrase = "cardse oliver william mckey Tooth oliver william mckey hall Fairy oliver william mckey Math Oliver William Mckey Gibber Jabber Tony Find survival of the fittest Something Here Marksman Oliver William Mckey Hall Her";
 //        Curve Ball Oliver William Mckey Hall Test James Bond Is A Good Movie
@@ -140,53 +140,41 @@ public class SearchMaster {
                                            streak++;
                                            allMatch++;
 
-                                           if (streak == 1){System.out.println(lineOfText.get(x) + " == " + phraseToSearch.get(y) + " // Line Of Text=" + x + " PhraseToSearch=" + y);
+                                           if (streak == 1){//System.out.println(lineOfText.get(x) + " == " + phraseToSearch.get(y) + " // Line Of Text=" + x + " PhraseToSearch=" + y);
 //                                           x = x -1;
                                                matchedPairs.add(x + " " + y);
-//                                               matchedPairs.add("|");
                                                wipStreakWord.add(lineOfText.get(x));
-
-                                               //Compare an array made each time in for on same x value start
-                                                   //Array with highest value goes through starting at that x point
                                            }
-                                               System.out.println(lineOfText.get(z) + " = " + phraseToSearch.get(w) + " // Line Of Text=" + z + " PhraseToSearch=" + w);
+//                                               System.out.println(lineOfText.get(z) + " = " + phraseToSearch.get(w) + " // Line Of Text=" + z + " PhraseToSearch=" + w);
                                                 matchedPairs.add(z + " " + w);
                                                wipStreakWord.add(lineOfText.get(z));
-                                           //System.out.println("HERE 3000 ===> " + matchedPairs);
-
-
 
                                            //y = y + 1;
 //                                           x = x + 1;
-
-
                                        } else {
                                            loop = false;
                                            streak = 0;
                                        }
-//                                       if (wipStreakWord.size() > longestMatch.size()){
-//                                           longestMatch = new ArrayList<>(wipStreakWord);
-//                                           System.out.println("====> Longest match is " + longestMatch);
-//                                       }
-//                                       wipStreakWord = new ArrayList<>();
                                    }
 
                                    if (wipStreakWord.size() > longestMatch.size()){
                                        longestMatch = new ArrayList<>(wipStreakWord);
-                                       System.out.println("====> Longest match is " + longestMatch);
+                                       // this is triggered quite a bit becuase the minimum for a word streak is 2
+                                       //System.out.println("====> Longest match is " + longestMatch);
                                    }
                                    wipStreakWord = new ArrayList<>();
 
                                    if (!longestMatch.isEmpty()) {
                                        matchedSequencesFinal.addAll(longestMatch);
                                    }
-                                   //longestMatch = new ArrayList<>();
                                }
 
 
                             }
-                        if (!longestMatch.isEmpty() && longestMatch.size() > 2){System.out.println("Actual ======================================================> Longest match is " + longestMatch);}
-
+                        if (!longestMatch.isEmpty() && longestMatch.size() > 2){System.out.println("Actual ======================================================> Longest match is " + longestMatch);
+                        //WORK TO DO HERE
+                        //System.out.println(matchedPairs);
+                        }
                     }
 
                 }
