@@ -14,7 +14,7 @@ public class App
     private static Double Doubleinput;
     private static FixerHTTPManager manager = new FixerHTTPManager();
     private static SearchMaster searchMaster = new SearchMaster();
-    private static ThreadExample threadExample = new ThreadExample();
+    //private static ThreadExample threadExample = new ThreadExample();
 
     private static Double input;
     private static String stringInput;
@@ -22,7 +22,10 @@ public class App
     public static void main(String[] args) throws Exception {
 
 //        threadExample.setUp();
-        searchMaster.search();
+        //searchMaster.search();
+
+//        LoadingBar loadingBar = new LoadingBar();
+//        loadingBar.m
 
 //        if (manager.initialize() == true) {
 //                System.out.println("Successful Start");
@@ -30,7 +33,7 @@ public class App
 //            } else {
 //                System.out.println("False Start ");
 //            }
-        System.exit(0);
+//        System.exit(0);
     }
 
     public static void murder(){

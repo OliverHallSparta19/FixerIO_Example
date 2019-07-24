@@ -25,6 +25,8 @@ Streak matching can be greatly improved
 
  */
 public class SearchMaster {
+    private byte anim;
+    private String lastLine = "";
     public static String success;
     static int i =1;
     private static Double Doubleinput;
@@ -60,7 +62,7 @@ public class SearchMaster {
         }
                                                                 //On some longer arrays ==
         //String searchPhrase = "c z j d e";
-        String searchPhrase = "cardse oliver william mckey Tooth oliver william mckey hall Fairy oliver william mckey Math Oliver William Mckey Gibber Jabber Tony Find survival of the fittest Something Here Marksman Oliver William Mckey Hall Her";
+        String searchPhrase = "Oliver William Hall Is A Great Tester";
 //        Curve Ball Oliver William Mckey Hall Test James Bond Is A Good Movie
         //maybe do list array of duplicates.
         //set a = {0, 3}
@@ -70,9 +72,10 @@ public class SearchMaster {
         List<String> phraseToSearch = Arrays.asList(searchPhrase.split(" "));
 
         BufferedReader br = null;
-        String line;
         int highTotalComparisons = 0;
+        boolean printResult = false;
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         for (int a = 0; a < files.size(); a++) {
             long startTime = System.nanoTime();
             ArrayList <String> bestMatches = new ArrayList();
@@ -164,14 +167,18 @@ public class SearchMaster {
                                    }
                                    wipStreakWord = new ArrayList<>();
 
-                                   if (!longestMatch.isEmpty()) {
-                                       matchedSequencesFinal.addAll(longestMatch);
-                                   }
+//                                   if (!longestMatch.isEmpty()) {
+//                                       matchedSequencesFinal.addAll(longestMatch);
+//                                   }
                                }
 
 
                             }
                         if (!longestMatch.isEmpty() && longestMatch.size() > 2){System.out.println("Actual ======================================================> Longest match is " + longestMatch);
+                        printResult = true;
+//                            if (!matchedSequencesFinal.isEmpty()){matchedSequencesFinal.add(longestMatch.toString());}
+                            matchedSequencesFinal.add(longestMatch.toString().replace(",",""));
+//                            matchedSequencesFinal.addAll(longestMatch);
                         //WORK TO DO HERE
                         //System.out.println(matchedPairs);fds
                         }
@@ -180,7 +187,8 @@ public class SearchMaster {
                 }
 
             }
-            if (bestMatches.size() < 2) {
+            if (printResult == true) {
+                printResult = false;
                 long endTime = System.nanoTime();
                 long duration = (endTime - startTime);
                 System.out.println("File: " + files.get(a));
@@ -204,12 +212,14 @@ public class SearchMaster {
 
             }
         }
+//END OF FILE SEARCH OPERATION////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
         double endTimeWhole = System.currentTimeMillis();
         double durationWhole = (endTimeWhole - startTimeWhole);
         double xdurationWhole = (durationWhole / 1000) % 60;
         System.out.println("========================================================");
-        System.out.println("Search Through " + formatter.format(files.size()) + " Files");
+        System.out.println("Searched Through " + formatter.format(files.size()) + " Files");
         System.out.println("Complete Whole Time Taken To Execute " + xdurationWhole + " Seconds");
         System.out.println("Total Number Of Comparisons Made " + formatter.format(highTotalComparisons));
         System.out.println("========================================================");

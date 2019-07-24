@@ -32,11 +32,8 @@ public class FixerHTTPManager {
     private static String type;
     private static String info;
     private static String uri;
-    private Boolean verify = false;
-    private static Boolean answer;
     public static String baseRate;
     private String myErrorCode = null;
-    private String api_extension = null;
 
     public boolean run;
 
@@ -268,23 +265,6 @@ public class FixerHTTPManager {
     //Maybe put that percentage in the mapping
 
     //Highlight the highest percentage match, should show first match that is highest if rest are same value
-
-
-
-    public void compareToExample () {
-        String str1 = "ap plee";
-        String str2 = "apple";
-        String str3 = "String method tutorial";
-
-        int var1 = str1.compareTo( str2 );
-        System.out.println("str1 & str2 comparison: "+var1);
-
-        int x = minDistance(str1, str2);
-        System.out.println(x);
-//        System.out.println("-------------------");
-//        System.out.println(getCountryCodeList().ge);
-
-    }
 
     public ArrayList wordSearch(String exampleWord){
         List<String> wordsToSearch = Arrays.asList(exampleWord.split(" "));
